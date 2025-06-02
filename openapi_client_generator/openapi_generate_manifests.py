@@ -101,7 +101,7 @@ def main():
         logging.info(f"Path {args.output} not found. Creating it.")
         os.mkdir(args.output)
 
-    openapi_client_path = f"{args.output}/manifest.yml"
+    openapi_client_path = f"{args.output}/manifest.json"
 
     with open(openapi_client_path, 'w') as f:
         json.dump(manifests, f, indent=2)

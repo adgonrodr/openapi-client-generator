@@ -39,7 +39,7 @@ class APIClient:
         """
         url = self.base_url + "{{ m.path }}"
 {% if m.parameters | selectattr('in','equalto','path') | list %}
-        url = url.format({% for p in m.parameters if p.in=='path' %}{{ p.python_name }}={{ p.python_name }}{% if not loop.last %}, {% endif %}{% endfor %})
+        url = url.format({% for p in m.parameters if p.in=='path' %}{{ p.name }}={{ p.python_name }}{% if not loop.last %}, {% endif %}{% endfor %})
 {% endif %}
         params: Dict[str, Any] = {}
 {% for p in m.parameters if p.in=='query' %}
