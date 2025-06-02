@@ -1,0 +1,62 @@
+"""Auto-generated API client from Swagger/OpenAPI manifests."""
+
+import requests
+from typing import Any, Dict, List, Optional
+
+class APIClient:
+    """
+    Wraps a requests.Session to call API endpoints.
+    :param base_url: Base URL for API.
+    :param headers: Default headers.
+    """
+    def __init__(self, base_url: str, headers: Optional[Dict[str,str]] = None) -> None:
+        self.base_url = base_url.rstrip('/')
+        self.session = requests.Session()
+        if headers:
+            self.session.headers.update(headers)
+
+{% for m in manifest %}
+    def {{ m.operationId }}(
+        self,
+        {%- for p in m.parameters if p.required %}
+        {{ p.python_name }}: {{ p.py_type }},{%- endfor %}
+        {%- for p in m.parameters if not p.required %}
+        {{ p.python_name }}: {{ p.py_type }}{% if p.default_repr is not none %} = {{ p.default_repr }}{% else %} = None{% endif %},{%- endfor %}
+        {%- if m.requestBody %}
+        body: Dict[str, Any],{%- endif %}
+    ) -> Any:
+        """
+        {{ m.summary }}
+{%- for p in m.parameters %}
+        :param {{ p.python_name }}: {% if not p.required %}Optional, default={{ p.default_repr }}. {% endif %}{{ p.description or 'No description.' }}
+        :type {{ p.python_name }}: {{ p.py_type }}
+{%- endfor %}{% if m.requestBody %}
+        :param body: Request body.
+        :type body: Dict[str, Any]
+{%- endif %}
+        :return: Parsed JSON response.
+        :rtype: Any
+        """
+        url = self.base_url + "{{ m.path }}"
+{% if m.parameters | selectattr('in','equalto','path') | list %}
+        url = url.format({% for p in m.parameters if p.in=='path' %}{{ p.python_name }}={{ p.python_name }}{% if not loop.last %}, {% endif %}{% endfor %})
+{% endif %}
+        params: Dict[str, Any] = {}
+{% for p in m.parameters if p.in=='query' %}
+        params['{{ p.name }}'] = {{ p.python_name }}
+{% endfor %}
+{% if m.requestBody %}
+        json_data = body
+{% else %}
+        json_data = None
+{% endif %}
+        response = self.session.request(
+            method="{{ m.method }}",
+            url=url,
+            params=params,
+            json=json_data
+        )
+        response.raise_for_status()
+        return response.json()
+
+{% endfor %}
