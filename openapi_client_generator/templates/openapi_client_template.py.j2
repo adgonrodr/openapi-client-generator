@@ -1,62 +1,104 @@
-"""Auto-generated API client from Swagger/OpenAPI manifests."""
+"""Auto‐generated API client from Swagger/OpenAPI manifests."""
 
 import requests
 from typing import Any, Dict, List, Optional
 
-class APIClient:
+class {{ api_name }}APIClient:
     """
     Wraps a requests.Session to call API endpoints.
     :param base_url: Base URL for API.
-    :param headers: Default headers.
+    :param token: Bearer token (if any).
+    :param headers: Default headers (optional).
     """
-    def __init__(self, base_url: str, headers: Optional[Dict[str,str]] = None) -> None:
+    def __init__(self, base_url: str, token: Optional[str] = None, headers: Optional[Dict[str,str]] = None) -> None:
         self.base_url = base_url.rstrip('/')
         self.session = requests.Session()
+
+        if token:
+            # inject Bearer token if provided
+            self.session.headers.update({"Authorization": f"Bearer {token}"})
         if headers:
             self.session.headers.update(headers)
 
 {% for m in manifest %}
     def {{ m.operationId }}(
         self,
-        {%- for p in m.parameters if p.required %}
-        {{ p.python_name }}: {{ p.py_type }},{%- endfor %}
-        {%- for p in m.parameters if not p.required %}
-        {{ p.python_name }}: {{ p.py_type }}{% if p.default_repr is not none %} = {{ p.default_repr }}{% else %} = None{% endif %},{%- endfor %}
-        {%- if m.requestBody %}
-        body: Dict[str, Any],{%- endif %}
+        {% set first=True %}
+        {% for p in m.parameters if p.required %}
+        {{ ('' if first else '        ') }}{{ p.python_name }}: {{ p.py_type }},
+        {% set first=False %}
+        {% endfor %}
+        {% for p in m.parameters if not p.required %}
+        {{ ('' if first else '        ') }}{{ p.python_name }}: {{ p.py_type }}{% if p.default_repr is not none %} = {{ p.default_repr }}{% else %} = None{% endif %},
+        {% set first=False %}
+        {% endfor %}
+        {% if m.requestBody %}
+        {{ ('' if first else '        ') }}body: Dict[str, Any],
+        {% endif %}
     ) -> Any:
         """
         {{ m.summary }}
-{%- for p in m.parameters %}
+{% for p in m.parameters %}
         :param {{ p.python_name }}: {% if not p.required %}Optional, default={{ p.default_repr }}. {% endif %}{{ p.description or 'No description.' }}
         :type {{ p.python_name }}: {{ p.py_type }}
-{%- endfor %}{% if m.requestBody %}
-        :param body: Request body.
+{% endfor %}{% if m.requestBody %}
+        :param body: Request body as a dict matching the schema.
         :type body: Dict[str, Any]
-{%- endif %}
-        :return: Parsed JSON response.
+{% endif %}
+        :return: Parsed response (JSON or raw text).
         :rtype: Any
         """
+        # Build URL
         url = self.base_url + "{{ m.path }}"
-{% if m.parameters | selectattr('in','equalto','path') | list %}
-        url = url.format({% for p in m.parameters if p.in=='path' %}{{ p.name }}={{ p.python_name }}{% if not loop.last %}, {% endif %}{% endfor %})
-{% endif %}
+        {% if m.parameters | selectattr('in','equalto','path') | list %}
+        url = url.format(
+        {% for p in m.parameters if p.in == 'path' %}
+            {{ p.name }}={{ p.python_name }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+        )
+        {% endif %}
+
+        # Build query parameters
         params: Dict[str, Any] = {}
-{% for p in m.parameters if p.in=='query' %}
-        params['{{ p.name }}'] = {{ p.python_name }}
-{% endfor %}
-{% if m.requestBody %}
+        {% for p in m.parameters if p.in == 'query' %}
+        if {{ p.python_name }} is not None:
+            params['{{ p.name }}'] = {{ p.python_name }}
+        {% endfor %}
+
+        # Build header parameters
+        headers: Dict[str, Any] = {}
+        {% for p in m.parameters if p.in == 'header' %}
+        if {{ p.python_name }} is not None:
+            headers['{{ p.name }}'] = {{ p.python_name }}
+        {% endfor %}
+
+        # Request body (if any)
+        {% if m.requestBody %}
         json_data = body
-{% else %}
+        {% else %}
         json_data = None
-{% endif %}
+        {% endif %}
+
+        # Perform request
         response = self.session.request(
             method="{{ m.method }}",
             url=url,
             params=params,
-            json=json_data
+            json=json_data,
+            headers=headers
         )
         response.raise_for_status()
+
+        # Determine return based on response mediaType
+        {% if m.responses.get('200') %}
+        content_type = response.headers.get("Content-Type", "")
+        # if it's JSON, parse it; otherwise hand back raw text
+        if "application/json" in content_type:
+            return response.json()
+        else:
+            return response.text
+        {% else %}
         return response.json()
+        {% endif %}
 
 {% endfor %}

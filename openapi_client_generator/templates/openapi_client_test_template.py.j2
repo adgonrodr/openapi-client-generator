@@ -1,0 +1,172 @@
+"""Auto‐generated pytest tests for {{ api_name }}APIClient, using the “rich” manifest."""
+
+import pytest
+from {{ api_name | lower }}_api_client import {{ api_name }}APIClient
+
+#
+# —— module‐level helper types / fixtures ——
+#
+
+class FakeResponse:
+    """
+    A minimal stand‐in for requests.Response that supports:
+      • .headers (a dict)
+      • .text   (for YAML/XML payloads)
+      • .json() (for JSON payloads)
+    """
+    def __init__(self, headers, body_text=None, body_json=None):
+        self.headers = headers
+        self._body_text = body_text
+        self._body_json = body_json
+
+    def raise_for_status(self):
+        return None
+
+    def json(self):
+        if self._body_json is None:
+            raise ValueError("Called .json() on non‐JSON response")
+        return self._body_json
+
+    @property
+    def text(self):
+        return self._body_text
+
+
+@pytest.fixture
+def patched_client(monkeypatch):
+    """
+    Returns a tuple (client, captured) where:
+      • client.session.request has been monkeypatched to:
+          – record all incoming arguments into `captured`
+          – return FakeResponse based on the incoming Accept header
+      • captured is a dict with keys: method, url, params, json, headers
+    """
+    client = {{ api_name }}APIClient("http://api.example.com", token="TEST_TOKEN")
+    captured = {}
+
+    def fake_request(method, url, params=None, json=None, headers=None):
+        # 1) Record everything the client passed
+        captured.update({
+            "method":  method,
+            "url":     url,
+            "params":  params or {},
+            "json":    json,
+            "headers": headers or {}
+        })
+
+        # 2) If the test wants YAML/XML, return FakeResponse with that mediaType
+        accept = (headers or {}).get("Accept", "")
+        {% for m in manifest %}
+        {% if m.responses.get('200') %}
+        if "{{ m.responses['200'].mediaType }}" in accept:
+            return FakeResponse(
+                headers={"Content-Type": "{{ m.responses['200'].mediaType }}"},
+                body_text="dummy: yaml"
+            )
+        {% endif %}
+        {% endfor %}
+
+        # 3) Otherwise, return a JSON response
+        return FakeResponse(
+            headers={"Content-Type": "application/json"},
+            body_json={"ok": True}
+        )
+
+    monkeypatch.setattr(client.session, "request", fake_request)
+    return client, captured
+
+
+{% for m in manifest %}
+def test_{{ m.operationId }}(patched_client):
+    client, captured = patched_client
+
+    # 1) Prepare dummy args for all parameters
+    {% for p in m.parameters %}
+    {% if p.py_type == 'int' %}
+    {{ p.python_name }} = 1
+    {% elif p.enum %}
+    {{ p.python_name }} = "{{ p.enum[0] }}"
+    {% elif p.py_type == 'str' %}
+    {{ p.python_name }} = "test"
+    {% elif p.py_type == 'bool' %}
+    {{ p.python_name }} = False
+    {% else %}
+    {{ p.python_name }} = None
+    {% endif %}
+    {% endfor %}
+
+    # 2) Prepare dummy requestBody if needed
+    {% if m.requestBody %}
+    body = {}
+    {% set rb_schema = m.requestBody.schema %}
+    {% set required_fields = rb_schema.get('required', []) %}
+    {% for field, spec in rb_schema.get('properties', {}).items() %}
+    {% if field in required_fields %}
+    {% if spec.type == 'string' %}
+    body["{{ field }}"] = "{{ 'test' + field if spec.format == 'uuid' else 'test' }}"
+    {% elif spec.type == 'integer' %}
+    body["{{ field }}"] = 1
+    {% else %}
+    body["{{ field }}"] = None
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    # 3) Call the client method
+    {% set call_args = [] %}
+    {% for p in m.parameters %}
+    {%   do call_args.append(p.python_name) %}
+    {% endfor %}
+    {% if m.requestBody %}
+    {%   do call_args.append("body") %}
+    {% endif %}
+    response = client.{{ m.operationId }}({{ call_args | join(", ") }})
+
+    # 4) Build the expected URL
+    expected_url = client.base_url + "{{ m.path }}"
+    {% if m.parameters | selectattr("in","equalto","path") | list %}
+    expected_url = expected_url.format(
+    {% for p in m.parameters if p.in == 'path' %}
+        {{ p.name }}={{ p.python_name }}{% if not loop.last %}, {% endif %}
+    {% endfor %}
+    )
+    {% endif %}
+
+    # 5) Build expected params dict
+    expected_params = {}
+    {% for p in m.parameters if p.in == 'query' %}
+    if {{ p.python_name }} is not None:
+        expected_params["{{ p.name }}"] = {{ p.python_name }}
+    {% endfor %}
+
+    # 6) Build expected headers
+    expected_headers = {}
+    {% for p in m.parameters if p.in == 'header' %}
+    if {{ p.python_name }} is not None:
+        expected_headers["{{ p.name }}"] = {{ p.python_name }}
+    {% endfor %}
+    {% if m.security %}
+    # The client __init__ already set "Authorization" for bearer‐token security
+    expected_headers["Authorization"] = "Bearer TEST_TOKEN"
+    {% endif %}
+
+    # 7) Assertions
+    assert captured["method"] == "{{ m.method }}"
+    assert captured["url"] == expected_url
+    assert captured["params"] == expected_params
+    assert captured["headers"] == expected_headers
+
+    {% if m.responses.get('200') %}
+    # If the operation’s 200 response is {{ m.responses['200'].mediaType }}, we should get .text
+    if "{{ m.responses['200'].mediaType }}" in (captured["headers"].get("Accept", "") or ""):
+        assert response == "dummy: yaml"
+    else:
+        assert response == {"ok": True}
+    {% else %}
+    # No special mediaType was declared → always JSON
+    assert response == {"ok": True}
+    {% endif %}
+
+
+{% endfor %}
