@@ -22,13 +22,20 @@ class SwaggerManifestGenerator:
       3. Save the resulting manifest JSON to disk.
     """
 
-    def __init__(self, source: str, output_dir: str):
+    MANIFEST_SUFFIX = "_manifest.json"
+
+    def __init__(self, api_name: str, source: str, output_dir: str, manifest_suffix: str = None):
         """
+        :param api_name: API name.
         :param source: URL or local file path of the OpenAPI/Swagger spec (JSON or YAML)
         :param output_dir: Directory where `manifest.json` will be written
+        :param manifest_suffix: Suffix of generated manifests.
+                              If None, defaults self.MANIFEST_SUFFIX
         """
+        self.api_name = api_name
         self.source = source
         self.output_dir = output_dir
+        self.manifest_suffix = manifest_suffix or self.MANIFEST_SUFFIX
         self.spec = None  # Will hold the loaded OpenAPI spec (dict)
         self.manifest = []  # Will hold the list of extracted manifest entries
 
@@ -45,7 +52,7 @@ class SwaggerManifestGenerator:
         self._write_manifest()
 
         print(f"✅ Generated {len(self.manifest)} manifest entries → "
-              f"{os.path.join(self.output_dir, 'manifest.json')}")
+              f"{os.path.join(self.output_dir, f"{self.api_name.lower()}{self.manifest_suffix}")}")
 
     # --------------------------------------------------------------------------
     # Step 1: Load the OpenAPI spec (JSON or YAML) from URL or file
@@ -156,7 +163,7 @@ class SwaggerManifestGenerator:
         """
         Dump self.manifest (a list of dicts) as JSON into `<output_dir>/manifest.json`.
         """
-        path = os.path.join(self.output_dir, "manifest.json")
+        path = os.path.join(self.output_dir, f"{self.api_name.lower()}{self.manifest_suffix}")
         with open(path, "w") as f:
             json.dump(self.manifest, f, indent=2)
 
@@ -341,6 +348,12 @@ if __name__ == "__main__":
         description="Generate a 'rich' manifest JSON from a Swagger/OpenAPI URL or file"
     )
     parser.add_argument(
+        "--api-name", "-n",
+        type=str,
+        required=True,
+        help="API name"
+    )
+    parser.add_argument(
         "--swagger-url", "-s",
         type=str,
         required=True,
@@ -349,10 +362,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output", "-o",
         type=str,
-        default="target",
-        help="Directory to write `manifest.json` (default: ./target)"
+        default="generated_manifests",
+        help="Directory to write `manifest.json` (default: ./generated_manifests)"
     )
     args = parser.parse_args()
 
-    generator = SwaggerManifestGenerator(source=args.swagger_url, output_dir=args.output)
+    generator = SwaggerManifestGenerator(api_name=args.api_name, source=args.swagger_url, output_dir=args.output)
     generator.run()

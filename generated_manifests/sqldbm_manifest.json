@@ -1,0 +1,1455 @@
+[
+  {
+    "operationId": "get_projects_project_id_revisions_last_dbtyaml",
+    "path": "/projects/{projectId}/revisions/last/dbtyaml",
+    "method": "GET",
+    "summary": "Generate dbt YAML for the latest revision",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "format",
+        "python_name": "format",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Source",
+            "Model"
+          ],
+          "type": "string",
+          "default": "Source"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": "'Source'",
+        "enum": [
+          "Source",
+          "Model"
+        ]
+      },
+      {
+        "name": "generateDataTypes",
+        "python_name": "generate_data_types",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "generateConstraints",
+        "python_name": "generate_constraints",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/x-yaml",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_revision_id_dbtyaml",
+    "path": "/projects/{projectId}/revisions/{revisionId}/dbtyaml",
+    "method": "GET",
+    "summary": "Generate dbt YAML for a specific revision",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "revisionId",
+        "python_name": "revision_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "format",
+        "python_name": "format",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Source",
+            "Model"
+          ],
+          "type": "string",
+          "default": "Source"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": "'Source'",
+        "enum": [
+          "Source",
+          "Model"
+        ]
+      },
+      {
+        "name": "generateDataTypes",
+        "python_name": "generate_data_types",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "generateConstraints",
+        "python_name": "generate_constraints",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/x-yaml",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_last_objects_dbtyaml",
+    "path": "/projects/{projectId}/revisions/last/objects/dbtyaml",
+    "method": "GET",
+    "summary": "Generate dbt YAML for a specific object of the latest revision by name",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "name",
+        "python_name": "name",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "format",
+        "python_name": "format",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Source",
+            "Model"
+          ],
+          "type": "string",
+          "default": "Model"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": "'Model'",
+        "enum": [
+          "Source",
+          "Model"
+        ]
+      },
+      {
+        "name": "caseSensitive",
+        "python_name": "case_sensitive",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "generateDataTypes",
+        "python_name": "generate_data_types",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "generateConstraints",
+        "python_name": "generate_constraints",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/x-yaml",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_revision_id_objects_dbtyaml",
+    "path": "/projects/{projectId}/revisions/{revisionId}/objects/dbtyaml",
+    "method": "GET",
+    "summary": "Generate dbt YAML for a specific object of a specific revision by name",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "revisionId",
+        "python_name": "revision_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "name",
+        "python_name": "name",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "format",
+        "python_name": "format",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Source",
+            "Model"
+          ],
+          "type": "string",
+          "default": "Model"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": "'Model'",
+        "enum": [
+          "Source",
+          "Model"
+        ]
+      },
+      {
+        "name": "caseSensitive",
+        "python_name": "case_sensitive",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "generateDataTypes",
+        "python_name": "generate_data_types",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "generateConstraints",
+        "python_name": "generate_constraints",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/x-yaml",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects",
+    "path": "/projects",
+    "method": "GET",
+    "summary": "Get project list",
+    "parameters": [],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions",
+    "path": "/projects/{projectId}/revisions",
+    "method": "GET",
+    "summary": "Get revision list",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_revision_id",
+    "path": "/projects/{projectId}/revisions/{revisionId}",
+    "method": "GET",
+    "summary": "Get revision",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "revisionId",
+        "python_name": "revision_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_last",
+    "path": "/projects/{projectId}/revisions/last",
+    "method": "GET",
+    "summary": "Get the latest revision",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_revision_id_ddl",
+    "path": "/projects/{projectId}/revisions/{revisionId}/ddl",
+    "method": "GET",
+    "summary": "Get DDL",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "revisionId",
+        "python_name": "revision_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "Accept",
+        "python_name": "accept",
+        "in": "header",
+        "description": "Accept",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/json",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_last_ddl",
+    "path": "/projects/{projectId}/revisions/last/ddl",
+    "method": "GET",
+    "summary": "Get DDL for the latest revision",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "Accept",
+        "python_name": "accept",
+        "in": "header",
+        "description": "Accept",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/json",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_environments",
+    "path": "/projects/{projectId}/environments",
+    "method": "GET",
+    "summary": "Get environment list",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_alter",
+    "path": "/projects/{projectId}/alter",
+    "method": "GET",
+    "summary": "Get alterscript for the latest revisions",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "Accept",
+        "python_name": "accept",
+        "in": "header",
+        "description": "Accept",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/json",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_alter_compare",
+    "path": "/projects/{projectId}/alter/compare",
+    "method": "GET",
+    "summary": "Get alterscript",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "revisionId",
+        "python_name": "revision_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "environmentId",
+        "python_name": "environment_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "withRevisionId",
+        "python_name": "with_revision_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "withEnvironmentId",
+        "python_name": "with_environment_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "Accept",
+        "python_name": "accept",
+        "in": "header",
+        "description": "Accept",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/json",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_last_objects_ddl",
+    "path": "/projects/{projectId}/revisions/last/objects/ddl",
+    "method": "GET",
+    "summary": "Get DDL for a specific object of the latest revision by name",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "name",
+        "python_name": "name",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "caseSensitive",
+        "python_name": "case_sensitive",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "Accept",
+        "python_name": "accept",
+        "in": "header",
+        "description": "Accept",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/json",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_projects_project_id_revisions_revision_id_objects_ddl",
+    "path": "/projects/{projectId}/revisions/{revisionId}/objects/ddl",
+    "method": "GET",
+    "summary": "Get DDL for a specific object of a specific revision by name",
+    "parameters": [
+      {
+        "name": "projectId",
+        "python_name": "project_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "revisionId",
+        "python_name": "revision_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "name",
+        "python_name": "name",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "caseSensitive",
+        "python_name": "case_sensitive",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      },
+      {
+        "name": "Accept",
+        "python_name": "accept",
+        "in": "header",
+        "description": "Accept",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/json",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security": []
+  },
+  {
+    "operationId": "get_flows",
+    "path": "/flows",
+    "method": "GET",
+    "summary": "Returns Tx Flow list.",
+    "parameters": [],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_flows_flow_id",
+    "path": "/flows/{flowId}",
+    "method": "GET",
+    "summary": "Returns Tx Flow for Tx project by ID.",
+    "parameters": [
+      {
+        "name": "flowId",
+        "python_name": "flow_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_runs",
+    "path": "/runs",
+    "method": "GET",
+    "summary": "Returns Tx Runs list.",
+    "parameters": [
+      {
+        "name": "runType",
+        "python_name": "run_type",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Run",
+            "ValidateRun",
+            "Deploy",
+            "Flow"
+          ],
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": [
+          "Run",
+          "ValidateRun",
+          "Deploy",
+          "Flow"
+        ]
+      },
+      {
+        "name": "designationType",
+        "python_name": "designation_type",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Flow",
+            "Object",
+            "Deploy"
+          ],
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": [
+          "Flow",
+          "Object",
+          "Deploy"
+        ]
+      },
+      {
+        "name": "designationName",
+        "python_name": "designation_name",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "status",
+        "python_name": "status",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "enum": [
+            "Success",
+            "Failed",
+            "Running",
+            "Canceled",
+            "Waiting",
+            "Skipped",
+            "Error"
+          ],
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": [
+          "Success",
+          "Failed",
+          "Running",
+          "Canceled",
+          "Waiting",
+          "Skipped",
+          "Error"
+        ]
+      },
+      {
+        "name": "startTimeMoreThanOrEqual",
+        "python_name": "start_time_more_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "startTimeLessThanOrEqual",
+        "python_name": "start_time_less_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "endTimeMoreThanOrEqual",
+        "python_name": "end_time_more_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "endTimeLessThanOrEqual",
+        "python_name": "end_time_less_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "durationMoreThanOrEqual",
+        "python_name": "duration_more_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "durationLessThanOrEqual",
+        "python_name": "duration_less_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "py_type": "int",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "triggeredBy",
+        "python_name": "triggered_by",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "commitId",
+        "python_name": "commit_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "commitDateMoreThanOrEqual",
+        "python_name": "commit_date_more_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "commitDateLessThanOrEqual",
+        "python_name": "commit_date_less_than_or_equal",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "committedBy",
+        "python_name": "committed_by",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "commitMessage",
+        "python_name": "commit_message",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "flowId",
+        "python_name": "flow_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "txObjectId",
+        "python_name": "tx_object_id",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "py_type": "str",
+        "required": false,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "post_runs",
+    "path": "/runs",
+    "method": "POST",
+    "summary": "Triggers new run by flow id",
+    "parameters": [],
+    "requestBody": {
+      "mediaType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "flowId": {
+            "type": "string",
+            "description": "Flow Identifier",
+            "format": "uuid"
+          },
+          "maxConcurrency": {
+            "type": "integer",
+            "description": "Number of concurrent requests for the flow",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Request body for trigger run request"
+      }
+    },
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_runs_run_id",
+    "path": "/runs/{runId}",
+    "method": "GET",
+    "summary": "Returns Tx Run by ID.",
+    "parameters": [
+      {
+        "name": "runId",
+        "python_name": "run_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_runs_run_id_status",
+    "path": "/runs/{runId}/status",
+    "method": "GET",
+    "summary": "Returns Tx Run status by ID.",
+    "parameters": [
+      {
+        "name": "runId",
+        "python_name": "run_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "post_runs_run_id_cancel",
+    "path": "/runs/{runId}/cancel",
+    "method": "POST",
+    "summary": "Cancel existing run by run id",
+    "parameters": [
+      {
+        "name": "runId",
+        "python_name": "run_id",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_tx_environment",
+    "path": "/tx_environment",
+    "method": "GET",
+    "summary": "Returns Tx Environment details for particular Tx project.",
+    "parameters": [],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_tx_objects",
+    "path": "/tx_objects",
+    "method": "GET",
+    "summary": "Returns Tx objects list.",
+    "parameters": [],
+    "requestBody": null,
+    "responses": {},
+    "security": []
+  },
+  {
+    "operationId": "get_tx_objects_object_name",
+    "path": "/tx_objects/{objectName}",
+    "method": "GET",
+    "summary": "Returns Tx object details by name for particular Tx project.",
+    "parameters": [
+      {
+        "name": "objectName",
+        "python_name": "object_name",
+        "in": "path",
+        "description": "",
+        "schema": {
+          "type": "string"
+        },
+        "py_type": "str",
+        "required": true,
+        "default_repr": null,
+        "enum": null
+      },
+      {
+        "name": "caseSensitive",
+        "python_name": "case_sensitive",
+        "in": "query",
+        "description": "",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        },
+        "py_type": "bool",
+        "required": false,
+        "default_repr": "False",
+        "enum": null
+      }
+    ],
+    "requestBody": null,
+    "responses": {
+      "200": {
+        "mediaType": "application/x-yaml",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "security": []
+  }
+]
